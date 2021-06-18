@@ -36,6 +36,7 @@ bool is_empty(stack* stack)
     return stack->top == -1;
 }
 
+/* Inserts an object at the top of the stack */
 bool push(stack* stack, int32_t item)
 {
     if (is_full(stack))
@@ -46,6 +47,7 @@ bool push(stack* stack, int32_t item)
     return true;
 }
 
+/* Removes and returns the object at the top of the stack */
 int32_t pop(stack* stack)
 {
     if (!is_empty(stack))
@@ -54,6 +56,7 @@ int32_t pop(stack* stack)
 	return 0;
 }
 
+/* Returns the object at the top of the stack without removing it */
 int32_t peek(stack* stack)
 {
     if (!is_empty(stack))
@@ -62,6 +65,17 @@ int32_t peek(stack* stack)
         return 0;
 }
 
+/* Remove all objects from the stack */
+void clear(stack* stack)
+{
+    uint32_t top = stack->top;
+
+    for (uint32_t i = 0; i <= top; i++)
+        pop(stack);
+}
+
+
+/* Reduces dynamic allocated memory */
 void delete_stack(stack* stack)
 {
     free(stack->data);
@@ -74,11 +88,8 @@ int main()
     push(stack, 10);
     push(stack, 20);
     push(stack, 100);
-
-    uint32_t top = stack->top;
-    for (uint32_t i = 0; i <= top; i++)
-	printf("%d : %d \n", i, pop(stack));
-
+     
+    clear(stack);
     printf("Is stack empty? %d \n", is_empty(stack));
     
     delete_stack(stack);
